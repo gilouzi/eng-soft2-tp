@@ -1,6 +1,6 @@
 from enum import Enum
 
-from .exceptions import UndefinedProductCategoryError
+from exceptions import UndefinedProductCategoryError
 
 
 class ProductCategory(Enum):
@@ -20,7 +20,7 @@ class Product:
         self.description = description
 
 
-    def get_shipment_freight(self):
+    def get_shipping_price(self):
         """ Returns the percentage of freight applied to the product shipment """
 
         if self.category == ProductCategory.FOOD:

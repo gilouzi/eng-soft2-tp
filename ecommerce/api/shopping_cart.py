@@ -1,10 +1,10 @@
 from typing import List
 
-from .user import User
-from .product import Product
+from user import User
+from product import Product
 
-from .exceptions import ProductNotFoundError
-from .exceptions import ProductAlreadyAddedError
+from exceptions import ProductNotFoundError
+from exceptions import ProductAlreadyAddedError
 
 
 class ShoppingCart:
@@ -40,7 +40,7 @@ class ShoppingCart:
     def get_total_price(self) -> float:
         total_price = 0
         for product in self.product_list:
-            product_price_with_shipment = product.get_shipment_freight() * product.price
+            product_price_with_shipment = product.get_shipping_price() * product.price
             total_price += product_price_with_shipment
 
         return total_price
