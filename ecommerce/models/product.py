@@ -24,8 +24,7 @@ class Product(db_product.Model):
     stock_amount = db_product.Column(db_product.Integer)
     description = db_product.Column(db_product.String(MAX_SIZE_STR))
 
-    def __init__(self, id: int, name: str, price: float, weight: float, category: ProductCategory, stock_amount: int, description: str) -> None:
-        self.id = id
+    def __init__(self, name: str, price: float, weight: float, category: ProductCategory, stock_amount: int, description: str) -> None:
         self.name = name
         self.price = price
         self.weight = weight
