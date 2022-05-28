@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}User page{% endblock %}
+
+{% block content %}
+    <p>Here goes the user's information.</p>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h2>User's information:</h2>
+    <p>Welcome, {{user.getName()}}!</p>
+    <table style="width:20%">
+        <tr>
+            <th>Name:</th>
+            <td>{{user.getName()}}</td>
+        </tr>
+        <tr>
+            <th>Email:</th>
+            <td>{{user.getEmail()}}</td>
+        </tr>
+        <tr>
+            <th>Login:</th>
+            <td>{{user.getLogin()}}</td>
+        </tr>
+        <tr>
+            <th>Address:</th>
+            <td>{{user.getAddress()}}</td>
+        </tr>
+        <tr>
+            <th>Telephone:</th>
+            <td>{{user.getTelephone()}}</td>
+        </tr>
+    </table>
+{% endblock %}
