@@ -1,34 +1,29 @@
-from enum import Enum
+from flask import render_template, request, redirect
+from __main__ import app
 
-from exceptions import UndefinedProductCategoryError
+from ecommerce.models.product import db_product, Product
 
+def save_product(id, name, price, weight, category, stock_amount, description):
+    product = Product(id, name, price, weight, category, stock_amount, description)
+    db_product.session.add(product)
+    db_product.session.commit()
 
-class ProductCategory(Enum):
-    FOOD = 0
-    UTENSIL = 1
-    ELETRONIC = 2
+@app.route('/product')
+def read_product():
+    products = Product.query.all()
+    return render_template('product/read.html', products=products)
 
-
-class Product:
-    def __init__(self, id: int, name: str, price: float, weight: float, category: ProductCategory, stock_amount: int, description: str) -> None:
-        self.id = id
-        self.name = name
-        self.price = price
-        self.weight = weight
-        self.category = category
-        self.stock_amount = stock_amount
-        self.description = description
-
-
-    def get_shipping_price(self):
-        """ Returns the percentage of freight applied to the product shipment """
-
-        if self.category == ProductCategory.FOOD:
-            return 1.05
-        elif self.category == ProductCategory.UTENSIL:
-            return 1.12
-        elif self.category == ProductCategory.ELETRONIC:
-            return 1.35
-        else:
-            error_message = f'Unknown product category: {self.category}'
-            raise UndefinedProductCategoryError(error_message)
+@app.route('/product/create/', methods=['GET', 'POST'])
+def create_product():
+    if request.method == 'GET':
+        return render_template('product/create.html')
+    if request.method == 'POST':
+        id = request.form['id']
+        name = request.form['name']
+        price = request.form['price']
+        weight = request.form['weight']
+        category = request.form['category']
+        stock_amount = request.form['stock_amount']
+        description = request.form['description']
+        save_product(id, name, price, weight, category, stock_amount, description)
+        return redirect('/product')

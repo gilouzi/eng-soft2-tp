@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Read products page{% endblock %}
+
+{% block content %}
+    <p>Here goes the list of all products.</p>
+    <h2>Available products:</h2>
+    <table style="width:100%">
+        <tr>
+            <th>Código do produto</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Peso</th>
+            <th>Categoria</th>
+            <th>Quantidade disponível</th>
+            <th>Descrição</th>
+        </tr>
+        {% for product in products %}
+            <tr>
+                <td>{{product.getId()}}</td>
+                <td>{{product.getName()}}</td>
+                <td>{{product.getPrice()}}</td>
+                <td>{{product.getWeight()}}</td>
+                <td>{{product.getCategory()}}</td>
+                <td>{{product.getStockAmount()}}</td>
+                <td>{{product.getDescription()}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
