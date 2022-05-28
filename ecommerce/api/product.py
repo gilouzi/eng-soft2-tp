@@ -8,6 +8,7 @@ def save_product(name, price, weight, category, stock_amount, description):
     db_product.session.add(product)
     db_product.session.commit()
 
+
 @app.route('/product')
 def read_product():
     products = Product.query.all()
