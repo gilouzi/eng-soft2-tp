@@ -7,9 +7,17 @@ from ecommerce.models.product import db_product, Product, ProductCategory
 
 
 def save_product(name, price, weight, category, stock_amount, description):
-    product = Product(name, price, weight, category, stock_amount, description)
-    db_product.session.add(product)
-    db_product.session.commit()
+    database_product = Product.query.filter(Product.name == name).first()
+
+    if database_product:
+        # Product already added, so we need to update it's stock amount
+        database_product.stock_amount += int(stock_amount)
+        db_product.session.commit()
+    else:
+        # A new product is being added to the database
+        new_product = Product(name, price, weight, category, stock_amount, description)
+        db_product.session.add(new_product)
+        db_product.session.commit()
 
 
 def insert_default_products_in_database():
