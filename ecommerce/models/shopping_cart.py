@@ -11,7 +11,7 @@ class ShoppingCart:
     def __init__(self, user: User) -> None:
         self.user = user
         self.product_list: List[int] = list()
-    
+        self.sub_total = 0
 
     def add_product(self, product_id: int) -> None:
         if product_id in self.product_list:
@@ -19,6 +19,7 @@ class ShoppingCart:
             raise ProductAlreadyAddedError(error_message)
         
         self.product_list.append(product_id)
+        self.sub_total += self.get_product_by_id(product_id).price
 
     def remove_product(self, product_id: int) -> None:
         if product_id not in self.product_list:
@@ -26,7 +27,10 @@ class ShoppingCart:
             raise ProductNotFoundError(error_message)
 
         self.product_list.remove(product_id)
+        self.sub_total -= self.get_product_by_id(product_id).price
 
+    def get_sub_total(self) -> float:
+        return self.sub_total
     
     def get_total_weight(self) -> float:
         total_weight = 0

@@ -34,12 +34,11 @@ def checkout_page():
         if 'user' in session: 
             user = User.query.filter_by(login=session['user']).first()
             products = []
-            sub_total = 0
+            sub_total = user_cart.get_sub_total()
             shipping = 0
             for product_id in user_cart.product_list:
                 product = Product.query.filter(Product.id == product_id).first()
                 products.append(product)
-                sub_total += product.getPrice()
                 shipping = max(product.get_shipping_price(), shipping)
             return render_template('shopping_cart/checkout_page.html', user=user, products=products, sub_total=sub_total, shipping=shipping)
         else:
@@ -54,12 +53,11 @@ def checkout_page():
         paymentMethod = request.form['paymentMethod']
 
         products = []
-        sub_total = 0
+        sub_total = user_cart.get_sub_total()
         shipping = 0
         for product_id in user_cart.product_list:
             product = Product.query.filter(Product.id == product_id).first()
             products.append(product)
-            sub_total += product.getPrice()
             shipping = max(product.get_shipping_price(), shipping)
         
         # cria pedido
