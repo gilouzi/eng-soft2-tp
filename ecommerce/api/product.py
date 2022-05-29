@@ -29,7 +29,9 @@ def insert_default_products_in_database():
         product['category'] = ProductCategory[product['category']]
         save_product(**product)
 
-
+def get_product_by_id(id):
+    return Product.query.filter(Product.id == id).first()
+    
 @app.route('/product', methods=['GET', 'POST'])
 def read_product():
     if request.method == 'POST':

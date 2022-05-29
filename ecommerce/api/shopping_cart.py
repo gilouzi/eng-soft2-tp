@@ -1,5 +1,6 @@
 from __main__ import app, user_cart
 from flask import render_template, request, redirect, session, flash, url_for
+from ecommerce.api.product import get_product_by_id
 
 from ecommerce.models.product import Product
 from ecommerce.models.user import User
@@ -11,7 +12,7 @@ def shopping_cart_page():
     total_amount = 0
     shipping = 0
     for product_id in user_cart.product_list:
-        product = Product.query.filter(Product.id == product_id).first()
+        product = get_product_by_id(product_id)
         products.append(product)
         total_amount += product.getPrice()
         shipping = max(product.get_shipping_price(), shipping)
@@ -28,7 +29,7 @@ def shopping_cart_page():
 
     products = []
     for product_id in user_cart.product_list:
-        product = Product.query.filter(Product.id == product_id).first()
+        product = get_product_by_id(product_id)
         products.append(product)
         
     return render_template('shopping_cart/shopping_cart_page.html', products=products)
