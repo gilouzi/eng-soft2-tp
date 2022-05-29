@@ -23,7 +23,7 @@ def shopping_cart_page():
             else:
                 user = User.query.filter_by(login=session['user']).first()
                 flash(f'{user.getName()}, we are finalizing your purchase.')
-                return render_template('shopping_cart/checkout_page.html', products=products, total_amount=total_amount )
+                return render_template('shopping_cart/checkout_page.html', user=user, products=products, total_amount=total_amount)
 
     products = []
     for product_id in user_cart.product_list:
