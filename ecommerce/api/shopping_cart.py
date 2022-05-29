@@ -31,33 +31,37 @@ def read_orders():
 @app.route('/checkout_page', methods=['GET', 'POST'])
 def checkout_page():
     if request.method == 'GET':
-        if 'user' in session: 
-            user = User.query.filter_by(login=session['user']).first()
-            sub_total = user_cart.get_sub_total()
-            shipping = user_cart.get_shipping() 
-            products = user_cart.get_products()
-            return render_template('shopping_cart/checkout_page.html', user=user, products=products, sub_total=sub_total, shipping=shipping)
-        else:
-            flash('You need to be logged in to finish shopping.')
-            return redirect('/login')
+        return show_checkout()
 
     if request.method == 'POST':
-        name = request.form['name']
-        login = request.form['login']
-        email = request.form['email']
-        address = request.form['address']
-        paymentMethod = request.form['paymentMethod']
+        return create_order(request.form)
 
+def show_checkout():
+    if 'user' in session: 
+        user = User.query.filter_by(login=session['user']).first()
         sub_total = user_cart.get_sub_total()
         shipping = user_cart.get_shipping() 
-        
-        # cria pedido
-        total_amount = sub_total + shipping
-        user = User.query.filter_by(name=name, login=login, email=email).first()
-        order = Order(user.id, user_cart, total_amount, address, paymentMethod)
-        order.save_order()
+        products = user_cart.get_products()
+        return render_template('shopping_cart/checkout_page.html', user=user, products=products, sub_total=sub_total, shipping=shipping)
+    else:
+        flash('You need to be logged in to finish shopping.')
+        return redirect('/login')
 
-        user_cart.product_list = []
+def create_order(form):
+    name = form['name']
+    login = form['login']
+    email = form['email']
+    address = form['address']
+    paymentMethod = form['paymentMethod']
 
-        # return redirect('/orders')
-        return redirect('/user')
+    sub_total = user_cart.get_sub_total()
+    shipping = user_cart.get_shipping() 
+    
+    total_amount = sub_total + shipping
+    user = User.query.filter_by(name=name, login=login, email=email).first()
+    order = Order(user.id, user_cart, total_amount, address, paymentMethod)
+    order.save_order()
+
+    user_cart.product_list = []
+
+    return redirect('/user')
