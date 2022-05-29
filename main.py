@@ -9,7 +9,6 @@ from datetime import timedelta
 from ecommerce.models.product import db_product
 from ecommerce.models.shopping_cart import ShoppingCart
 from ecommerce.models.user import db_user
-from ecommerce.models.product import Product, ProductCategory
 
 
 app = Flask(__name__)
@@ -30,26 +29,8 @@ def create_database():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
-
-
-def parse_command_line_arguments():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--default-db', dest='create_default_db', action='store_true', required=False, help='flag to create a default database')
-
-    args = parser.parse_args()
-    return args
-
-
-def create_default_database():
-    with open('default_products.json', 'r') as f:
-        products = json.load(f)
-
-    for product in products:
-        product['category'] = ProductCategory[product['category']]
-        p = Product(**product)
+    return render_template('index_page.html')
         
-
 
 # import declared routes
 import ecommerce.api.product
@@ -58,9 +39,4 @@ import ecommerce.api.user
 
 
 if __name__ == '__main__':
-    args = parse_command_line_arguments()
-    if args.create_default_db:
-        print('[warning] Creating default database...')
-        create_default_database()
-
     app.run(debug=True)
