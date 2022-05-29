@@ -6,6 +6,13 @@ from ecommerce.models.user import User
 
 @app.route('/shopping_cart', methods=['GET', 'POST'])
 def shopping_cart_page():
+    products = []
+    total_amount = 0
+    for product_id in user_cart.product_list:
+        product = Product.query.filter(Product.id == product_id).first()
+        products.append(product)
+        total_amount += product.getPrice()
+
     if request.method == 'POST':
         if request.form.get('remove_button') == 'remove':
             product_id = int(request.form['product_id'])
@@ -16,6 +23,8 @@ def shopping_cart_page():
             else:
                 user = User.query.filter_by(login=session['user']).first()
                 flash(f'{user.getName()}, we are finalizing your purchase.')
+                return render_template('shopping_cart/checkout_page.html', products=products, total_amount=total_amount )
+
     products = []
     for product_id in user_cart.product_list:
         product = Product.query.filter(Product.id == product_id).first()

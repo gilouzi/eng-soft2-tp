@@ -3,7 +3,6 @@ import argparse
 
 from flask import Flask
 from flask import render_template
-from flask import url_for, redirect
 from datetime import timedelta
 
 from ecommerce.models.product import db_product
