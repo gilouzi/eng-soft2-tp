@@ -48,12 +48,8 @@ def checkout_page():
         address = request.form['address']
         paymentMethod = request.form['paymentMethod']
 
-        products = []
         sub_total = user_cart.get_sub_total()
         shipping = user_cart.get_shipping() 
-        for product_id in user_cart.product_list:
-            product = Product.query.filter(Product.id == product_id).first()
-            products.append(product)
         
         # cria pedido
         total_amount = sub_total + shipping
