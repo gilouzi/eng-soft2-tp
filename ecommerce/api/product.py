@@ -22,12 +22,12 @@ def read_product():
     products = Product.query.all()
     product_list = user_cart.product_list
     
-    return render_template('product/read.html', products=products, product_list=product_list)
+    return render_template('product/list_product_page.html', products=products, product_list=product_list)
 
 @app.route('/product/create/', methods=['GET', 'POST'])
 def create_product():
     if request.method == 'GET':
-        return render_template('product/create.html')
+        return render_template('product/create_product_page.html')
     if request.method == 'POST':
         name = request.form['name']
         price = request.form['price']

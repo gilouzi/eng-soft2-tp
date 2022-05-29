@@ -23,7 +23,7 @@ def create_database():
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index_page.html')
     
 
 # import declared routes

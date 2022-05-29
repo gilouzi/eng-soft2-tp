@@ -18,4 +18,4 @@ def shopping_cart_page():
         product = Product.query.filter(Product.id == product_id).first()
         products.append(product)
         
-    return render_template('shopping_cart.html', products=products)
+    return render_template('shopping_cart_page.html', products=products)

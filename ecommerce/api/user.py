@@ -30,7 +30,7 @@ def login():
             flash(f'Already logged in.', 'info')
             return redirect(url_for('user'))
         else:
-            return render_template('user/login.html')
+            return render_template('user/login_page.html')
 
 @app.route('/logout')
 def logout():
@@ -42,14 +42,14 @@ def logout():
 def user():
     if 'user' in session:
         user = User.query.filter_by(login=session['user']).first()
-        return render_template('user/user.html', user=user)
+        return render_template('user/user_page.html', user=user)
     else:
         return redirect(url_for('login'))
 
 @app.route('/user/create/', methods=['GET', 'POST'])
 def create_user():
     if request.method == 'GET':
-        return render_template('user/create.html')
+        return render_template('user/create_user_page.html')
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
