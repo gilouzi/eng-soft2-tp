@@ -20,13 +20,25 @@
               <h6 class="my-0">{{product.getName()}}</h6>
               <small class="text-muted">{{product.getDescription()}}</small>
             </div>
-            <span class="text-muted">${{product.getPrice()}}</span>
+            <span class="text-muted">${{'{:.2f}'.format(product.getPrice())}}</span>
           </li>
         {% endfor %}
+      </ul>
+      <ul class="list-group mb-3">
+        <li class="list-group-item d-flex justify-content-between bg-light">
+          <span>Subtotal (USD)</span>
+          <strong>${{'{:.2f}'.format(total_amount)}}</strong>
+        </li>
+        <li class="list-group-item d-flex justify-content-between bg-light">
+          <div class="text-danger">
+            <h6 class="my-0">Shipping price</h6>
+          </div>
+          <strong class="text-danger">+${{'{:.2f}'.format(shipping)}}</strong>
+        </li>
         
-        <li class="list-group-item d-flex justify-content-between">
+        <li class="list-group-item d-flex justify-content-between bg-light">
           <span>Total (USD)</span>
-          <strong>${{total_amount}}</strong>
+          <strong>${{'{:.2f}'.format(total_amount + shipping)}}</strong>
         </li>
       </ul>
     </div>

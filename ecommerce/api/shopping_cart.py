@@ -8,10 +8,12 @@ from ecommerce.models.user import User
 def shopping_cart_page():
     products = []
     total_amount = 0
+    shipping = 0
     for product_id in user_cart.product_list:
         product = Product.query.filter(Product.id == product_id).first()
         products.append(product)
         total_amount += product.getPrice()
+        shipping = max(product.get_shipping_price(), shipping)
 
     if request.method == 'POST':
         if request.form.get('remove_button') == 'remove':
@@ -22,7 +24,7 @@ def shopping_cart_page():
                 flash('You need to be logged in to finish shopping.')
             else:
                 user = User.query.filter_by(login=session['user']).first()
-                return render_template('shopping_cart/checkout_page.html', user=user, products=products, total_amount=total_amount)
+                return render_template('shopping_cart/checkout_page.html', user=user, products=products, total_amount=total_amount, shipping=shipping)
 
     products = []
     for product_id in user_cart.product_list:
