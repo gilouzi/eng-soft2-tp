@@ -1,6 +1,5 @@
 from __main__ import app, user_cart
 from flask import render_template, request, redirect, session, flash, url_for
-from ecommerce.api.product import get_product_by_id
 
 from ecommerce.models.product import Product
 from ecommerce.models.user import User
@@ -19,11 +18,7 @@ def shopping_cart_page():
             else:
                 return redirect(url_for('checkout_page'))
 
-    products = []
-    for product_id in user_cart.product_list:
-        product = get_product_by_id(product_id)
-        products.append(product)
-        
+    products = user_cart.get_products() 
     return render_template('shopping_cart/shopping_cart_page.html', products=products)
 
 @app.route('/orders', methods=['GET', 'POST'])

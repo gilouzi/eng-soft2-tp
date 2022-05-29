@@ -1,4 +1,5 @@
 from typing import List
+from ecommerce.models.product import Product
 
 from ecommerce.models.user import User
 
@@ -42,3 +43,14 @@ class ShoppingCart:
             total_price += product_price_with_shipment
 
         return total_price
+
+    def get_products(self) -> List[Product]:
+        products = []
+        for product_id in self.product_list:
+            product = self.get_product_by_id(product_id)
+            products.append(product)
+        
+        return products
+    
+    def get_product_by_id(self, id):
+        return Product.query.filter(Product.id == id).first()
