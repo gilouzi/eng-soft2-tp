@@ -30,6 +30,7 @@ def create_database():
 
 @app.route('/')
 def home():
+<<<<<<< HEAD
     return render_template('index.html')
 
 
@@ -50,6 +51,10 @@ def create_default_database():
         p = Product(**product)
         
 
+=======
+    return render_template('index_page.html')
+    
+>>>>>>> e70b8a110eb4c52250e7709d174d344cc7b02737
 
 # import declared routes
 import ecommerce.api.product
