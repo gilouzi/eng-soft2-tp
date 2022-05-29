@@ -8,6 +8,7 @@ from datetime import timedelta
 from ecommerce.models.product import db_product
 from ecommerce.models.shopping_cart import ShoppingCart
 from ecommerce.models.user import db_user
+from ecommerce.models.order import db_order, db_productsPerOrder
 
 
 app = Flask(__name__)
@@ -24,6 +25,8 @@ user_cart = ShoppingCart(None)
 def create_database():
     db_product.create_all()
     db_user.create_all()
+    db_order.create_all()
+    db_productsPerOrder.create_all()
 
 
 @app.route('/')
