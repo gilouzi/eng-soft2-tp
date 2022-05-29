@@ -16,9 +16,8 @@ class ShoppingCart:
         if product_id in self.product_list:
             error_message = f'Product with id {product_id} already added to shopping cart'
             raise ProductAlreadyAddedError(error_message)
-        else:
-            self.product_list.append(product_id)
-            print("adicionou")
+        
+        self.product_list.append(product_id)
 
     def remove_product(self, product_id: int) -> None:
         if product_id not in self.product_list:

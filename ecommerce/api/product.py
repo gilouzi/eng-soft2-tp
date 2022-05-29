@@ -13,11 +13,16 @@ def save_product(name, price, weight, category, stock_amount, description):
 @app.route('/product', methods=['GET', 'POST'])
 def read_product():
     if request.method == 'POST':
-        print('adicionei')
-        user_cart.add_product(int(request.form['cart_button']))
+        product_id = int(request.form['product_id'])
+        if request.form['cart_button'] == 'add_product':
+            user_cart.add_product(product_id)
+        elif request.form['cart_button'] == 'remove_product':
+            user_cart.remove_product(product_id)
 
     products = Product.query.all()
-    return render_template('product/read.html', products=products, product_list=user_cart.product_list)
+    product_list = user_cart.product_list
+    
+    return render_template('product/read.html', products=products, product_list=product_list)
 
 @app.route('/product/create/', methods=['GET', 'POST'])
 def create_product():
