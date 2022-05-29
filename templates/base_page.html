@@ -28,17 +28,13 @@
                     <ul class="navbar-nav">
                         {% for href, id, caption in navigationBar %}
                             <li>
-                                {% if id != 'login' %} 
-                                    <a {% if id == active_page %} 
-                                            class="nav-link active"
-                                        {% else %}
-                                            class="nav-link"
-                                        {% endif%}  
-                                        href="{{ href|e }}">{{ caption|e }}
-                                    </a>
-                                {% else %}
-                                    <a class="nav-link" href="/login">Login</a>
-                                {% endif%}
+                                <a {% if id == active_page %} 
+                                        class="nav-link active"
+                                    {% else %}
+                                        class="nav-link"
+                                    {% endif%}  
+                                    href="{{ href|e }}">{{ caption|e }}
+                                </a>
                             </li>
                         {% endfor %}
                     </ul>
