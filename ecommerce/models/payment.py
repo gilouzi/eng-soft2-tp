@@ -1,6 +1,5 @@
 from enum import Enum
 
-
 class PaymentType(Enum):
-    BOLETO = 0
+    DEBIT_CARD = 0
     CREDIT_CARD = 1

@@ -1,0 +1,48 @@
+{% extends "base_page.html" %}
+{% set active_page = "product" %}
+
+{% block title %}Products list{% endblock %}
+
+{% block content %}
+    <p>Here goes the list of all order.</p>
+    <h2>Orders:</h2>
+    <table class="table" style="width:100%">
+        <thead class="thead-dark">
+
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">UserId</th>
+                <th scope="col">Payment</th>
+                <th scope="col">Total amount ($)</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for order in orders %}
+            <tr>
+                <td>{{order.id}}</td>
+                <td>{{order.user_id}}</td>
+                <td>{{order.payment}}</td>
+                <td>{{order.total_amount}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h2>Products per Orders:</h2>
+    <table class="table" style="width:100%">
+        <thead class="thead-dark">
+
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">OrderId</th>
+                <th scope="col">ProductId</th>
+                <th></th>
+            </tr>
+        </thead>
+        {% for productPerOrder in productsPerOrder %}
+            <tr>
+                <td>{{productPerOrder.id}}</td>
+                <td>{{productPerOrder.order_id}}</td>
+                <td>{{productPerOrder.product_id}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
