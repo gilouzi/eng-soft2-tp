@@ -33,12 +33,9 @@ def checkout_page():
     if request.method == 'GET':
         if 'user' in session: 
             user = User.query.filter_by(login=session['user']).first()
-            products = []
             sub_total = user_cart.get_sub_total()
             shipping = user_cart.get_shipping() 
-            for product_id in user_cart.product_list:
-                product = Product.query.filter(Product.id == product_id).first()
-                products.append(product)
+            products = user_cart.get_products()
             return render_template('shopping_cart/checkout_page.html', user=user, products=products, sub_total=sub_total, shipping=shipping)
         else:
             flash('You need to be logged in to finish shopping.')
