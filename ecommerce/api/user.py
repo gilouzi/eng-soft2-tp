@@ -9,21 +9,23 @@ def save_user(name, email, login, password, address, telephone):
     db_user.session.add(user)
     db_user.session.commit()
 
+def redirect_based_on_user(login: str, password: str):
+    foundUser = User.query.filter_by(login=login, password=password).first()
+    if foundUser:
+        session['user'] = login
+        flash(f'Login successful.', 'info')
+        return redirect(url_for('user'))
+    else:
+        flash(f'Login or password incorrect.', 'info')
+        return redirect(url_for('login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         session.permanent = True
         user_login = request.form['login']
         user_password = request.form['password']
-
-        foundUser = User.query.filter_by(login=user_login, password=user_password).first()
-        if foundUser:
-            session['user'] = user_login
-            flash(f'Login successful.', 'info')
-            return redirect(url_for('user'))
-        else:
-            flash(f'Login or password incorrect.', 'info')
-            return redirect(url_for('login'))
+        return redirect_based_on_user(user_login, user_password)
 
     else:
         if 'user' in session:
