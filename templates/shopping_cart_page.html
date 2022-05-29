@@ -10,8 +10,8 @@
             <tr>
                 <th scope="col">Code</th>
                 <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Weight</th>
+                <th scope="col">Price ($)</th>
+                <th scope="col">Weight (kg)</th>
                 <th scope="col">Category</th>
                 <th scope="col">Available Stock Quantity</th>
                 <th scope="col">Description</th>
@@ -24,8 +24,8 @@
             <tr>
                 <td>{{product.getId()}}</td>
                 <td>{{product.getName()}}</td>
-                <td>{{product.getPrice()}}</td>
-                <td>{{product.getWeight()}}</td>
+                <td>{{'{:.2f}'.format(product.getPrice())}}</td>
+                <td>{{'{:.2f}'.format(product.getWeight())}}</td>
                 <td>{{product.getCategory()}}</td>
                 <td>{{product.getStockAmount()}}</td>
                 <td>{{product.getDescription()}}</td>

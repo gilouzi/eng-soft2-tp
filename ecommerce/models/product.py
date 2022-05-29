@@ -45,7 +45,7 @@ class Product(db_product.Model):
         return self.weight
     
     def getCategory(self):
-        return self.category
+        return self.category.name
     
     def getStockAmount(self):
         return self.stock_amount
