@@ -9,12 +9,10 @@ from ecommerce.models.order import Order, ProductsPerOrder
 @app.route('/shopping_cart', methods=['GET', 'POST'])
 def shopping_cart_page():
     products = []
-    total_amount = 0
     shipping = 0
     for product_id in user_cart.product_list:
         product = get_product_by_id(product_id)
         products.append(product)
-        total_amount += product.getPrice()
         shipping = max(product.get_shipping_price(), shipping)
 
     if request.method == 'POST':
