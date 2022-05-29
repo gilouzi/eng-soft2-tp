@@ -57,11 +57,11 @@ class Product(db_product.Model):
         """ Returns the percentage of freight applied to the product shipment """
 
         if self.category == ProductCategory.FOOD:
-            return 1.05
+            return round(0.05*self.price, 2)
         elif self.category == ProductCategory.UTENSIL:
-            return 1.12
+            return round(0.12*self.price, 2)
         elif self.category == ProductCategory.ELETRONIC:
-            return 1.35
+            return round(0.35*self.price, 2)
         else:
             error_message = f'Unknown product category: {self.category}'
             raise UndefinedProductCategoryError(error_message)

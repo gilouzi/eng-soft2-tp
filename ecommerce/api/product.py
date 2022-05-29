@@ -47,7 +47,7 @@ def read_product():
 @app.route('/product/create/', methods=['GET', 'POST'])
 def create_product():
     if request.method == 'GET':
-        return render_template('product/create_product_page.html')
+        return render_template('product/create_product_page.html', categories=ProductCategory)
 
     if request.method == 'POST':
         if request.form.get('button') == 'insert-default-products':

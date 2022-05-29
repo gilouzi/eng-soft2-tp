@@ -9,10 +9,12 @@ from ecommerce.models.order import Order, ProductsPerOrder
 def shopping_cart_page():
     products = []
     total_amount = 0
+    shipping = 0
     for product_id in user_cart.product_list:
         product = Product.query.filter(Product.id == product_id).first()
         products.append(product)
         total_amount += product.getPrice()
+        shipping = max(product.get_shipping_price(), shipping)
 
     if request.method == 'POST':
         if request.form.get('remove_button') == 'remove':

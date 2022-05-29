@@ -6,15 +6,50 @@
 {% block content %}
     <p>Here goes the form to create products.</p>
     <h2>Create product:</h2>
-    <form action='' method = "POST">
-        <p>Name<input type = "text" name = "name" /></p>
-        <p>Price<input type = "number" min="0" step="0.01" name = "price" /></p>
-        <p>Weight<input type = "number" min="0" step="0.01" name = "weight" /></p>
-        <p>Category<input type = "text" min="0" name = "category" /></p>
-        <p>Available Stock Quantity<input type = "number" name = "stock_amount" /></p>
-        <p>Description<input type = "text" name = "description" /></p>
+    <form action="" method="POST" style="max-width: 500px; padding-left: 20px;">
+        <div class="form-group row" style="padding-bottom: 10px">
+          <label class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" placeholder="Insert product name here..."/>
+          </div>
+        </div>
+        <div class="form-group row" style="padding-bottom: 10px">
+            <label class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+              <input type="number" min="0" step="0.01" class="form-control" name="price" placeholder="Insert product price here..."/>
+            </div>
+        </div>
+        <div class="form-group row" style="padding-bottom: 10px">
+            <label class="col-sm-2 col-form-label">Weight</label>
+            <div class="col-sm-10">
+              <input type="number" min="0" step="0.01" class="form-control" name="weight" placeholder="Insert product weight here..."/>
+            </div>
+        </div>
+        <div class="form-group row" style="padding-bottom: 10px">
+            <label class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-10">
+                <select class="form-select" name="category">
+                    {% for category in categories %}
+                        <option value="{{category.name}}">{{category.name}}</option>
+                    {% endfor %}
+                </select>
+              <!-- <input type="text" class="form-control" name="category" placeholder="Insert product category here..."/> -->
+            </div>
+        </div>
+        <div class="form-group row" style="padding-bottom: 10px">
+            <label class="col-sm-2 col-form-label">Stock Amount</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" name="stock_amount" placeholder="Insert product available stock quantity here..."/>
+            </div>
+        </div>
+        <div class="form-group" style="padding-bottom: 20px">
+            <label for="exampleFormControlTextarea1">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="description" rows="3" placeholder="Insert product description here..."></textarea>
+        </div>
         
-        <p><input type = "submit" value = "Send" /></p>
-        <button type="submit" value="insert-default-products" name="button">Insert Default Products</button>
+        <div style="display: flex; justify-content: space-evenly;">
+            <button type="submit" value="insert-default-products" name="button" class="btn btn-outline-secondary" >Insert Default Products</button>
+            <input type="submit" value="Send" class="btn btn-outline-primary"/>
+        </div>
     </form>
 {% endblock %}
