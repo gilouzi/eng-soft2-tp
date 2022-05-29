@@ -20,5 +20,9 @@ def shopping_cart_page():
         elif request.form.get('finish_button') == 'finish':
             return render_template('shopping_cart/checkout_page.html', products=products, total_amount=total_amount )
 
+    products = []
+    for product_id in user_cart.product_list:
+        product = Product.query.filter(Product.id == product_id).first()
+        products.append(product)
         
     return render_template('shopping_cart/shopping_cart_page.html', products=products)
