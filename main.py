@@ -4,6 +4,7 @@ from flask import url_for, redirect
 from datetime import timedelta
 
 from ecommerce.models.product import db_product
+from ecommerce.models.shopping_cart import ShoppingCart
 from ecommerce.models.user import db_user
 
 app = Flask(__name__)
@@ -13,6 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db_product.init_app(app)
+user_cart = ShoppingCart(None)
 
 @app.before_first_request
 def create_database():

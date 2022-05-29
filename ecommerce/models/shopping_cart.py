@@ -1,7 +1,6 @@
 from typing import List
 
-from ecommerce.api.user import User
-from product import Product
+from ecommerce.models.user import User
 
 from ecommerce.api.exceptions import ProductNotFoundError
 from ecommerce.api.exceptions import ProductAlreadyAddedError
@@ -10,23 +9,23 @@ from ecommerce.api.exceptions import ProductAlreadyAddedError
 class ShoppingCart:
     def __init__(self, user: User) -> None:
         self.user = user
-        self.product_list: List[Product] = list()
+        self.product_list: List[int] = list()
     
 
-    def add_product(self, product: Product) -> None:
-        if product in self.product_list:
-            error_message = f'Product with id {product.id} already added to shopping cart'
+    def add_product(self, product_id: int) -> None:
+        if product_id in self.product_list:
+            error_message = f'Product with id {product_id} already added to shopping cart'
             raise ProductAlreadyAddedError(error_message)
-        
-        self.product_list.append(product)
+        else:
+            self.product_list.append(product_id)
+            print("adicionou")
 
-
-    def remove_product(self, product: Product) -> None:
-        if product not in self.product_list:
-            error_message = f'Product with id {product.id} not found in shopping cart'
+    def remove_product(self, product_id: int) -> None:
+        if product_id not in self.product_list:
+            error_message = f'Product with id {product_id} not found in shopping cart'
             raise ProductNotFoundError(error_message)
 
-        self.product_list.remove(product)
+        self.product_list.remove(product_id)
 
     
     def get_total_weight(self) -> float:
