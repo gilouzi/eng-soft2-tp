@@ -27,7 +27,7 @@
       <ul class="list-group mb-3">
         <li class="list-group-item d-flex justify-content-between bg-light">
           <span>Subtotal (USD)</span>
-          <strong>${{'{:.2f}'.format(total_amount)}}</strong>
+          <strong>${{'{:.2f}'.format(sub_total)}}</strong>
         </li>
         <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="text-danger">
@@ -38,7 +38,7 @@
         
         <li class="list-group-item d-flex justify-content-between bg-light">
           <span>Total (USD)</span>
-          <strong>${{'{:.2f}'.format(total_amount + shipping)}}</strong>
+          <strong>${{'{:.2f}'.format(sub_total + shipping)}}</strong>
         </li>
       </ul>
     </div>

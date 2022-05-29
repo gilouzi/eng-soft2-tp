@@ -46,12 +46,14 @@ def checkout_page():
         if 'user' in session: 
             user = User.query.filter_by(login=session['user']).first()
             products = []
-            total_amount = 0
+            sub_total = 0
+            shipping = 0
             for product_id in user_cart.product_list:
                 product = Product.query.filter(Product.id == product_id).first()
                 products.append(product)
-                total_amount += product.getPrice()
-            return render_template('shopping_cart/checkout_page.html', user=user, products=products, total_amount=total_amount)
+                sub_total += product.getPrice()
+                shipping = max(product.get_shipping_price(), shipping)
+            return render_template('shopping_cart/checkout_page.html', user=user, products=products, sub_total=sub_total, shipping=shipping)
         else:
             flash('You need to be logged in to finish shopping.')
             return redirect('/login')
@@ -64,13 +66,16 @@ def checkout_page():
         paymentMethod = request.form['paymentMethod']
 
         products = []
-        total_amount = 0
+        sub_total = 0
+        shipping = 0
         for product_id in user_cart.product_list:
             product = Product.query.filter(Product.id == product_id).first()
             products.append(product)
-            total_amount += product.getPrice()
+            sub_total += product.getPrice()
+            shipping = max(product.get_shipping_price(), shipping)
         
         # cria pedido
+        total_amount = sub_total + shipping
         user = User.query.filter_by(name=name, login=login, email=email).first()
         order = Order(user.id, user_cart, total_amount, address, paymentMethod)
         order.save_order()
