@@ -1,13 +1,25 @@
+import json
+
 from flask import render_template, request, redirect
 from __main__ import app, user_cart
 
-from ecommerce.models.product import db_product, Product
+from ecommerce.models.product import db_product, Product, ProductCategory
 
 
 def save_product(name, price, weight, category, stock_amount, description):
     product = Product(name, price, weight, category, stock_amount, description)
     db_product.session.add(product)
     db_product.session.commit()
+
+
+def insert_default_products_in_database():
+    products_json = 'default_products.json'
+    with open(products_json, 'r') as file:
+        products = json.load(file)
+
+    for product in products:
+        product['category'] = ProductCategory[product['category']]
+        save_product(**product)
 
 
 @app.route('/product', methods=['GET', 'POST'])
@@ -28,12 +40,17 @@ def read_product():
 def create_product():
     if request.method == 'GET':
         return render_template('product/create_product_page.html')
+
     if request.method == 'POST':
-        name = request.form['name']
-        price = request.form['price']
-        weight = request.form['weight']
-        category = request.form['category']
-        stock_amount = request.form['stock_amount']
-        description = request.form['description']
-        save_product(name, price, weight, category, stock_amount, description)
+        if request.form.get('button') == 'insert-default-products':
+            insert_default_products_in_database()
+        else:
+            name = request.form['name']
+            price = request.form['price']
+            weight = request.form['weight']
+            category = request.form['category']
+            stock_amount = request.form['stock_amount']
+            description = request.form['description']
+            save_product(name, price, weight, category, stock_amount, description)
+        
         return redirect('/product')
