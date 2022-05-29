@@ -9,11 +9,9 @@ from ecommerce.models.order import Order, ProductsPerOrder
 @app.route('/shopping_cart', methods=['GET', 'POST'])
 def shopping_cart_page():
     products = []
-    shipping = 0
     for product_id in user_cart.product_list:
         product = get_product_by_id(product_id)
         products.append(product)
-        shipping = max(product.get_shipping_price(), shipping)
 
     if request.method == 'POST':
         if request.form.get('remove_button') == 'remove':
