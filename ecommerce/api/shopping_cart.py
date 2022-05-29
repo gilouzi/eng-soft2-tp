@@ -35,11 +35,10 @@ def checkout_page():
             user = User.query.filter_by(login=session['user']).first()
             products = []
             sub_total = user_cart.get_sub_total()
-            shipping = 0
+            shipping = user_cart.get_shipping() 
             for product_id in user_cart.product_list:
                 product = Product.query.filter(Product.id == product_id).first()
                 products.append(product)
-                shipping = max(product.get_shipping_price(), shipping)
             return render_template('shopping_cart/checkout_page.html', user=user, products=products, sub_total=sub_total, shipping=shipping)
         else:
             flash('You need to be logged in to finish shopping.')
@@ -54,11 +53,10 @@ def checkout_page():
 
         products = []
         sub_total = user_cart.get_sub_total()
-        shipping = 0
+        shipping = user_cart.get_shipping() 
         for product_id in user_cart.product_list:
             product = Product.query.filter(Product.id == product_id).first()
             products.append(product)
-            shipping = max(product.get_shipping_price(), shipping)
         
         # cria pedido
         total_amount = sub_total + shipping

@@ -32,6 +32,13 @@ class ShoppingCart:
     def get_sub_total(self) -> float:
         return self.sub_total
     
+    def get_shipping(self) -> float:
+        shipping = 0
+        for product_id in self.product_list:
+            product = self.get_product_by_id(product_id)
+            shipping = max(shipping, product.get_shipping_price())
+        return shipping
+
     def get_total_weight(self) -> float:
         total_weight = 0
         for product in self.product_list:
