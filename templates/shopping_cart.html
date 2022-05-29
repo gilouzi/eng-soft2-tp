@@ -3,5 +3,45 @@
 {% block title %}Shopping cart page{% endblock %}
 
 {% block content %}
-    <p>Here goes the display of shopping cart.</p>
+    <h2>Products in your shopping cart:</h2>
+    <table class="table" style="width:100%">
+        <thead class="thead-dark">
+
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Weight</th>
+                <th scope="col">Category</th>
+                <th scope="col">Available Stock Quantity</th>
+                <th scope="col">Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <form action="" method="POST">
+        {% for product in products %}
+            <input type="hidden" name="product_id" value="{{product.getId()}}" />
+            <tr>
+                <td>{{product.getId()}}</td>
+                <td>{{product.getName()}}</td>
+                <td>{{product.getPrice()}}</td>
+                <td>{{product.getWeight()}}</td>
+                <td>{{product.getCategory()}}</td>
+                <td>{{product.getStockAmount()}}</td>
+                <td>{{product.getDescription()}}</td>
+                      
+                <td>
+                    <!-- Display button: remove product from cart -->
+                    <button type="submit" value="remove" name="remove_button" class="btn btn-outline-danger">
+                        {% include "product/buttons/remove_from_cart_button_layout.html" %}
+                        Remove from cart
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+            <button type="submit" value="finish" name="finish_button" class="btn btn-outline-success">
+                Finish shopping
+            </button>
+        </form>
+    </table>
 {% endblock %}
