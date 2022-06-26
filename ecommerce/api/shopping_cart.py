@@ -1,4 +1,4 @@
-from app import app, user_cart
+from ecommerce import app, user_cart
 from flask import render_template, request, redirect, session, flash, url_for
 
 from ecommerce.models.product import Product
