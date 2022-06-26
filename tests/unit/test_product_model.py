@@ -28,6 +28,6 @@ class TestProductModel(unittest.TestCase):
         product = Product("utensil product", 1.55, 12, ProductCategory.UTENSIL, 10, "test utensil")
         self.assertEqual(0.19, product.get_shipping_price())
 
-    def test_eletronic_shipping_price(self):
+    def test_eletronic_shipping_price_rounding(self):
         product = Product("eletronic product", 1.50, 12, ProductCategory.ELETRONIC, 10, "test eletronic")
         self.assertEqual(0.53, product.get_shipping_price())

@@ -1,4 +1,5 @@
 from enum import Enum
+from math import ceil
 
 from ecommerce.api.exceptions import UndefinedProductCategoryError
 from flask_sqlalchemy import SQLAlchemy
@@ -57,11 +58,14 @@ class Product(db_product.Model):
         """ Returns the percentage of freight applied to the product shipment """
 
         if self.category == ProductCategory.FOOD:
-            return round(0.05*self.price, 2)
+            return self.get_rounded_price(0.05*self.price)
         elif self.category == ProductCategory.UTENSIL:
-            return round(0.12*self.price, 2)
+            return self.get_rounded_price(0.12*self.price)
         elif self.category == ProductCategory.ELETRONIC:
-            return round(0.35*self.price, 2)
+            return self.get_rounded_price(0.35*self.price)
         else:
             error_message = f'Unknown product category: {self.category}'
             raise UndefinedProductCategoryError(error_message)
+
+    def get_rounded_price(self, price):
+        return ceil(price * 100) / 100
