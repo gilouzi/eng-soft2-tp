@@ -3,13 +3,9 @@ from ecommerce.api.exceptions import UndefinedProductCategoryError
 from ecommerce.models.product import Product, ProductCategory
 
 class TestProductModel(unittest.TestCase):
-    # def setUp(self) -> None:
-    #     self.product = Product('test product', 0, 0, None, 0, 'test product')
-
     def test_book_shipping_price(self):
-        self.product.price = 100
-        self.product.category = ProductCategory.BOOK
-        self.assertEqual(1, self.product.get_shipping_price())
+        product = Product('test product', 100, 0, ProductCategory.BOOK, 0, 'test product')
+        self.assertEqual(1, product.get_shipping_price())
 
     def test_food_shipping_price(self):
         product = Product('test product', 100, 0, ProductCategory.FOOD, 0, 'test product')
@@ -28,9 +24,8 @@ class TestProductModel(unittest.TestCase):
             Product('test product', 100, 0, 'UNDEFINED', 0, 'test product')
 
     def test_book_shipping_price_rounding(self):
-        self.product.price = 1.43
-        self.product.category = ProductCategory.BOOK
-        self.assertEqual(0.02, self.product.get_shipping_price())
+        product = Product('test product', 1.43, 0, ProductCategory.BOOK, 0, 'test product')
+        self.assertEqual(0.02, product.get_shipping_price())
 
     def test_food_shipping_price_rouding(self):
         product = Product('test product', 1.50, 0, ProductCategory.FOOD, 0, 'test product')
