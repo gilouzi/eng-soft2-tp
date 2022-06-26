@@ -44,13 +44,15 @@ class testShoppingCart(unittest.TestCase):
     def test_sub_total(self):
         with app.app_context():
             self.shopping_cart.add_product(self.productId)
-            self.assertEqual(self.product.price, self.shopping_cart.get_sub_total())
+            self.assertEqual(self.product.getPrice(), self.shopping_cart.get_sub_total())
     
     def test_total_weight(self):
         with app.app_context():
             self.shopping_cart.add_product(self.productId)
             self.assertEqual(self.product.getWeight(), self.shopping_cart.get_total_weight())
-            
     
-
-
+    def test_shipping_price(self):
+        with app.app_context():
+            self.shopping_cart.add_product(self.productId)
+            self.assertEqual(self.product.get_shipping_price(), self.shopping_cart.get_shipping())
+            
