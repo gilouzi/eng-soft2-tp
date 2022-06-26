@@ -1,6 +1,6 @@
 from unicodedata import name
 from flask import render_template, request, redirect, url_for, session, flash
-from __main__ import app
+from app import app
 
 from ecommerce.models.user import db_user, User
 
