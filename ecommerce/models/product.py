@@ -21,6 +21,7 @@ class Product(db_product.Model):
     id = db_product.Column(db_product.Integer, primary_key=True)
     name = db_product.Column(db_product.String(MAX_SIZE_STR))
     price = db_product.Column(db_product.Float)
+    shipping_price = db_product.Column(db_product.Float)
     weight = db_product.Column(db_product.Float)
     category = db_product.Column(db_product.Enum(ProductCategory))
     stock_amount = db_product.Column(db_product.Integer)
@@ -33,6 +34,7 @@ class Product(db_product.Model):
         self.category = category
         self.stock_amount = stock_amount
         self.description = description
+        self.shipping_price = self.set_shipping_price(category, price)
 
     def getId(self):
         return self.id
@@ -57,18 +59,20 @@ class Product(db_product.Model):
 
     def get_shipping_price(self):
         """ Returns the percentage of freight applied to the product shipment """
-
-        if self.category == ProductCategory.BOOK:
-            return self.get_rounded_price(0.01*self.price)
-        elif self.category == ProductCategory.FOOD:
-            return self.get_rounded_price(0.05*self.price)
-        elif self.category == ProductCategory.UTENSIL:
-            return self.get_rounded_price(0.12*self.price)
-        elif self.category == ProductCategory.ELETRONIC:
-            return self.get_rounded_price(0.35*self.price)
-        else:
-            error_message = f'Unknown product category: {self.category}'
-            raise UndefinedProductCategoryError(error_message)
+        return self.shipping_price
 
     def get_rounded_price(self, price):
         return ceil(price * 100) / 100
+    
+    def set_shipping_price(self, category, price):
+        if category == ProductCategory.BOOK:
+            return self.get_rounded_price(0.01*price)
+        elif category == ProductCategory.FOOD:
+            return self.get_rounded_price(0.05*price)
+        elif category == ProductCategory.UTENSIL:
+            return self.get_rounded_price(0.12*price)
+        elif category == ProductCategory.ELETRONIC:
+            return self.get_rounded_price(0.35*price)
+        else:
+            error_message = f'Unknown product category: {category}'
+            raise UndefinedProductCategoryError(error_message)
