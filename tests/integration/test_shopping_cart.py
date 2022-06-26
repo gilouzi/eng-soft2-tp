@@ -55,4 +55,9 @@ class testShoppingCart(unittest.TestCase):
         with app.app_context():
             self.shopping_cart.add_product(self.productId)
             self.assertEqual(self.product.get_shipping_price(), self.shopping_cart.get_shipping())
+    
+    def test_total_price(self):
+        with app.app_context():
+            self.shopping_cart.add_product(self.productId)
+            self.assertEqual(self.product.getPrice() + self.product.get_shipping_price(), self.shopping_cart.get_total_price())
             
