@@ -25,27 +25,28 @@
                 <th></th>
             </tr>
         </thead>
-        <form action="" method="POST">
         {% for product in products %}
-            <input type="hidden" name="product_id" value="{{product.getId()}}" />
-            <tr>
-                <td>{{product.getId()}}</td>
-                <td>{{product.getName()}}</td>
-                <td>{{'{:.2f}'.format(product.getPrice())}}</td>
-                <td>{{'{:.2f}'.format(product.getWeight())}}</td>
-                <td>{{product.getCategory()}}</td>
-                <td>{{product.getStockAmount()}}</td>
-                <td>{{product.getDescription()}}</td>
-                      
-                <td>
+        <tr>
+            <td>{{product.getId()}}</td>
+            <td>{{product.getName()}}</td>
+            <td>{{'{:.2f}'.format(product.getPrice())}}</td>
+            <td>{{'{:.2f}'.format(product.getWeight())}}</td>
+            <td>{{product.getCategory()}}</td>
+            <td>{{product.getStockAmount()}}</td>
+            <td>{{product.getDescription()}}</td> 
+            <td>
+                <form action="" method="POST">
+                    <input type="hidden" name="product_id" value="{{product.getId()}}" />
                     <!-- Display button: remove product from cart -->
                     <button type="submit" value="remove" name="remove_button" class="btn btn-outline-danger">
                         {% include "product/buttons/remove_from_cart_button_layout.html" %}
                         Remove from cart
                     </button>
-                </td>
-            </tr>
-            {% endfor %}
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        <form action="" method="POST">
             <button type="submit" value="finish" name="finish_button" class="btn btn-outline-success">
                 Finish shopping
             </button>
