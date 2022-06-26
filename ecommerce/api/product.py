@@ -1,7 +1,7 @@
 import json
 
 from flask import render_template, request, redirect
-from __main__ import app, user_cart
+from app import app, user_cart
 
 from ecommerce.models.product import db_product, Product, ProductCategory
 

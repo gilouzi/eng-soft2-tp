@@ -23,5 +23,5 @@ python3 -m venv venv # criação de um virtual environment
 source venv/bin/activate
 
 pip3 install -e . # instalação das dependências do sistema
-python3 main.py # execução do sistema em um servidor local
+python3 app.py # execução do sistema em um servidor local
 ````
