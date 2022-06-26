@@ -41,11 +41,11 @@ class ShoppingCart:
 
     def get_total_weight(self) -> float:
         total_weight = 0
-        for product in self.product_list:
+        for product_id in self.product_list:
+            product = self.get_product_by_id(product_id)
             total_weight += product.weight
 
         return total_weight
-
 
     def get_total_price(self) -> float:
         total_price = 0
