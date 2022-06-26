@@ -32,7 +32,7 @@ jobs:
         python -m pip install --editable .
     - name: Unit Testing with unittest
       run: |
-        python -m unittest discover tests/unit/
+        python -m unittest discover ecommerce/tests/unit/
     - name: Integration Testing with unittest
       run: |
-        python -m unittest discover tests/integration/
+        python -m unittest discover ecommerce/tests/integration/
