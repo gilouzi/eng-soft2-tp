@@ -8,9 +8,10 @@ MAX_SIZE_STR = 50
 db_product = SQLAlchemy()
 
 class ProductCategory(Enum):
-    FOOD = 0
-    UTENSIL = 1
-    ELETRONIC = 2
+    BOOK = 0
+    FOOD = 1
+    UTENSIL = 2
+    ELETRONIC = 3
 
 
 class Product(db_product.Model):
@@ -57,7 +58,9 @@ class Product(db_product.Model):
     def get_shipping_price(self):
         """ Returns the percentage of freight applied to the product shipment """
 
-        if self.category == ProductCategory.FOOD:
+        if self.category == ProductCategory.BOOK:
+            return self.get_rounded_price(0.01*self.price)
+        elif self.category == ProductCategory.FOOD:
             return self.get_rounded_price(0.05*self.price)
         elif self.category == ProductCategory.UTENSIL:
             return self.get_rounded_price(0.12*self.price)

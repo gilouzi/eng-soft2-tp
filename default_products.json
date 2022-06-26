@@ -78,5 +78,13 @@
         "category": "ELETRONIC",
         "stock_amount": 48,
         "description": "A generic charger compatible with a great variaty of phones made by MacroHard and Pear."
+    },
+    {
+        "name": "1985",
+        "price": 18.99,
+        "weight": 0.2,
+        "category": "BOOK",
+        "stock_amount": 30,
+        "description": "The sequel to the classic book wrote by George Orwell"
     }
 ]
