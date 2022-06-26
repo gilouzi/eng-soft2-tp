@@ -1,4 +1,4 @@
-from app import app
+from ecommerce import app
 import unittest
 
 from ecommerce.models.user import User
