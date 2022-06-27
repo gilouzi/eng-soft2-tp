@@ -7,15 +7,47 @@ from ecommerce.models.shopping_cart import ShoppingCart
 from ecommerce.models.product import db_product, Product, ProductCategory
 from ecommerce.api.exceptions import ProductAlreadyAddedError, ProductNotFoundError
 
-class testShoppingCart(unittest.TestCase):
+class TestShoppingCart(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super(TestShoppingCart, cls).setUpClass()
+
+        with app.app_context():
+            db_product.init_app(app)
+
+            cls.product = Product(
+                name='productName',
+                price=10.99, 
+                weight=0.5,
+                category=ProductCategory.UTENSIL,
+                stock_amount=5,
+                description='productDescription'
+            )
+
+            save_product(
+                name=cls.product.name,
+                price=cls.product.price,
+                weight=cls.product.weight,
+                category=cls.product.category,
+                stock_amount=cls.product.stock_amount,
+                description=cls.product.description
+            )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        super(TestShoppingCart, cls).tearDownClass()
+
+        with app.app_context():
+            product = Product.query.filter(Product.name == 'productName').first()
+            db_product.session.delete(product)
+            db_product.session.commit()
 
     def setUp(self):
         with app.app_context():
-            db_product.init_app(app)
             user = User(name='userName', email='email@email.com', login='login', password='password', address='address', telephone='123456789')
-            product = Product(name='productName', price=10.99, weight=0.5, category=ProductCategory.UTENSIL, stock_amount=5, description='productDescription')
-            save_product(name=product.name, price=product.price, weight=product.weight, category=product.category, stock_amount=product.stock_amount, description=product.description)
-            self.product = product
+            
+            self.product = TestShoppingCart.product
             self.productId = Product.query.filter(Product.name == 'productName').first().id
             self.shopping_cart = ShoppingCart(user=user)
 
@@ -60,4 +92,4 @@ class testShoppingCart(unittest.TestCase):
         with app.app_context():
             self.shopping_cart.add_product(self.productId)
             self.assertEqual(self.product.getPrice() + self.product.get_shipping_price(), self.shopping_cart.get_total_price())
-            
+        
