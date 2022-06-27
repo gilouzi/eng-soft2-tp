@@ -15,7 +15,7 @@ def save_product(name, price, weight, category, stock_amount, description):
         db_product.session.commit()
     else:
         # A new product is being added to the database
-        new_product = Product(name, price, weight, category, stock_amount, description)
+        new_product = Product(name, float(price), float(weight), category, int(stock_amount), description)
         db_product.session.add(new_product)
         db_product.session.commit()
 
@@ -55,7 +55,7 @@ def create_product():
             name = request.form['name']
             price = request.form['price']
             weight = request.form['weight']
-            category = request.form['category']
+            category = ProductCategory[request.form['category']]
             stock_amount = request.form['stock_amount']
             description = request.form['description']
             save_product(name, price, weight, category, stock_amount, description)
